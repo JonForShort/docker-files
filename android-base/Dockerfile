@@ -2,22 +2,35 @@ FROM ubuntu:15.10
 
 MAINTAINER thejunkjon "thejunkjon@gmail.com"
 
-RUN apt-get update -qq
-RUN apt-get upgrade -y
-RUN apt-get install -y --no-install-recommends openjdk-8-jdk
+# Update image
+RUN apt-get update
 
-ENV ANDROID_SDK_VERSION 24.4.1
+# Install java8
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:webupd8team/java
+RUN apt-get update
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get install -y oracle-java8-installer
 
-RUN apt-get install -y --no-install-recommends wget
-RUN cd /opt && wget -q http://dl.google.com/android/android-sdk_r$ANDROID_SDK_VERSION-linux.tgz
-RUN cd /opt && tar xzf android-sdk_r$ANDROID_SDK_VERSION-linux.tgz
-RUN cd /opt && rm -f android-sdk_r$ANDROID_SDK_VERSION-linux.tgz
+# Install Dependencies
+RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --force-yes expect git wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 python curl
 
-ENV ANDROID_HOME /opt/android-sdk-linux
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-RUN echo y | android update sdk --filter platform-tools,build-tools-23.0.2,android-23,extra-android-support --no-ui --force
+# Setup Environment
+ENV ANDROID_SDK_VERSION                 r24.4.1
+ENV ANDROID_BUILD_TOOLS_VERSION         23.0.3
+ENV ANDROID_SDK_FILENAME                android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
+ENV ANDROID_SDK_URL                     http://dl.google.com/android/${ANDROID_SDK_FILENAME}
+ENV ANDROID_API_LEVELS                  android-21,android-22,android-23
+ENV ANDROID_HOME                        /opt/android-sdk-linux
+ENV PATH                                ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
-RUN apt-get install -y --no-install-recommends git
+# Install Android SDK
+RUN cd /opt &&\
+    wget --output-document=android-sdk.tgz --quiet http://dl.google.com/android/android-sdk_$ANDROID_SDK_VERSION-linux.tgz &&\
+    tar xzf android-sdk.tgz &&\
+    rm -f android-sdk.tgz &&\
+    chown -R root.root android-sdk-linux
 
-RUN apt-get autoclean
-RUN apt-get autoremove
+# Clean up
+RUN apt-get -y autoremove
+RUN apt-get -y autoclean
