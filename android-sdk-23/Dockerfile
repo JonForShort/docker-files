@@ -1,4 +1,4 @@
-FROM thejunkjon:android-base
+FROM thejunkjon/android-base:latest
 
 MAINTAINER thejunkjon "thejunkjon@gmail.com"
 
