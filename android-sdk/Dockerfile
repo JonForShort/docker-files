@@ -1,4 +1,4 @@
-FROM symcdocker:android-base
+FROM thejunkjon:android-base
 
 MAINTAINER thejunkjon "thejunkjon@gmail.com"
 
