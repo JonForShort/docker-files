@@ -20,6 +20,7 @@ ENV ANDROID_SDK_VERSION                 r24.4.1
 ENV ANDROID_SDK_FILENAME                android-sdk_${ANDROID_SDK_VERSION}-linux.tgz
 ENV ANDROID_SDK_URL                     http://dl.google.com/android/${ANDROID_SDK_FILENAME}
 ENV ANDROID_HOME                        /opt/android-sdk-linux
+ENV PATH                                ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # Install Android SDK
 RUN cd /opt && wget --output-document=android-sdk.tgz --quiet ${ANDROID_SDK_URL} && tar xzf android-sdk.tgz && rm -f android-sdk.tgz && chown -R root.root android-sdk-linux
