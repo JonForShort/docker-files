@@ -13,7 +13,7 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
 RUN apt-get install -y oracle-java8-installer
 
 # Install Dependencies
-RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --force-yes expect git wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 python curl
+RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --force-yes expect git wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 python curl kvm
 
 # Setup Environment
 ENV ANDROID_SDK_VERSION                 r24.4.1
