@@ -1,24 +1,16 @@
-FROM ubuntu:15.10
+FROM ubuntu:18.10
 
 MAINTAINER thejunkjon "thejunkjon@gmail.com"
 
-RUN apt-get update -qq
-
-RUN apt-get install -y software-properties-common
-
-RUN dpkg --add-architecture i386
-
-RUN add-apt-repository ppa:wine/wine-builds
-
-RUN apt-get update -qq
-
-RUN apt-get upgrade -y
-
-RUN apt-get install -y --install-recommends winehq-devel
-
-RUN apt-get install -y --install-recommends xauth
-
-RUN apt-get install -y --install-recommends openssh-server
+RUN apt-get update -qq && \
+    apt-get install -y software-properties-common && \
+    dpkg --add-architecture i386 && \
+    add-apt-repository ppa:wine/wine-builds && \
+    apt-get update -qq && \
+    apt-get upgrade -y && \
+    apt-get install -y --install-recommends winehq-devel && \
+    apt-get install -y --install-recommends xauth && \
+    apt-get install -y --install-recommends openssh-server
 
 EXPOSE 22
 

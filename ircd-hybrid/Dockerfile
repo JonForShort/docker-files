@@ -1,7 +1,7 @@
-FROM ubuntu:15.10
+FROM ubuntu:18.10
 
 MAINTAINER thejunkjon "thejunkjon@gmail.com"
 
-RUN apt-get update -qq
-RUN apt-get upgrade -y
-RUN apt-get install -y ircd-hybrid
+RUN apt-get update -qq && \
+    apt-get upgrade -y && \
+    apt-get install -y ircd-hybrid
