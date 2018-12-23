@@ -14,6 +14,7 @@ ENV ANDROID_SDK_TOOLS_VERSION="4333796"
 ENV ANDROID_NDK_VERSION="17b"
 ENV ANDROID_SDK_HOME="$ANDROID_HOME"
 ENV ANDROID_NDK_HOME="$ANDROID_NDK/android-ndk-r$ANDROID_NDK_VERSION"
+ENV ANDROID_NDK_ROOT=${ANDROID_NDK_HOME}
 
 ENV PATH="$PATH:${ANDROID_SDK_HOME}/emulator:${ANDROID_SDK_HOME}/tools/bin:${ANDROID_SDK_HOME}/tools:${ANDROID_SDK_HOME}/platform-tools:${ANDROID_NDK}"
 
@@ -33,9 +34,10 @@ RUN wget -q --output-document=android-ndk.zip ${ANDROID_NDK_DOWNLOAD_URL} && \
     unzip -q android-ndk.zip -d ${ANDROID_NDK} && \
     rm -rf android-ndk.zip
 
-RUN apt install -y clang build-essential git npm && apt -y autoclean && apt -y autoremove && apt clean
-
-RUN apt install -y libtinfo5 python3
+RUN apt install -y clang build-essential git npm ninja-build python3 libtinfo5 && \
+    apt autoclean -y && \
+    apt autoremove -y && \
+    apt clean
 
 RUN useradd -ms /bin/bash frida 
 
@@ -43,4 +45,4 @@ USER frida
 WORKDIR /home/frida
 
 ENV TERM=xterm-256color
-ENV ANDROID_NDK_ROOT=${ANDROID_NDK_HOME}
+
