@@ -3,7 +3,7 @@ FROM debian:buster-slim
 MAINTAINER thejunkjon
 
 RUN apt-get update && \
-    apt-get -y install qtbase5-dev libxcb-xinerama0-dev build-essential python wget tmux zip emacs qtcreator && \
+    apt-get -y install qtbase5-dev libxcb-xinerama0-dev build-essential python wget tmux zip emacs qtcreator qt5-default && \
     apt-get -y autoclean && \
     apt-get -y autoremove && \
     apt-get -y clean
